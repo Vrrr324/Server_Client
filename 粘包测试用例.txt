@@ -1,0 +1,35 @@
+1.两个完整包粘包
+			MsgMaker mm;
+			char* buffer = new char[512];
+			memcpy(buffer, "helloworldhelloworldhelloworldhelloworldhelloworld", sizeof("helloworldhelloworldhelloworldhelloworldhelloworld"));
+			char* buffer2 = new char[512];
+			memcpy(buffer2, "sleep world!!", sizeof("sleep world!!"));
+			size_t len = strlen(buffer) + 1;
+			size_t len2 = strlen(buffer2) + 1;
+			mm.MakeComplexMsg(buffer, len, SERVERID, clientID);
+			MsgMaker mm2;
+			mm2.MakeComplexMsg(buffer2, len2, SERVERID, clientID);
+			memcpy(buffer + len , buffer2, len2);
+			send(serversocket, buffer, len+len2, 0);
+			Sleep(500 * SEC);
+2.一个完整包分成两部分
+			MsgMaker mm;
+			char* buffer = new char[512];
+			memcpy(buffer, "helloworldhelloworldhelloworldhelloworldhelloworld", sizeof("helloworldhelloworldhelloworldhelloworldhelloworld"));
+			char* buffer2 = new char[512];
+			memcpy(buffer2, "sleep world!!", sizeof("sleep world!!"));
+			size_t len = strlen(buffer) + 1;
+			size_t len2 = strlen(buffer2) + 1;
+			mm.MakeComplexMsg(buffer, len, SERVERID, clientID);
+			PkgHead pkghead;
+			PkgMaker pkgmaker;
+			pkghead.type = complex;
+			pkghead.tasktype = 0;
+			pkghead.source = 1;
+			pkghead.target = 0;
+			pkghead.len = len + 1;
+			pkgmaker.Push((char*)&pkghead, sizeof(pkghead));
+			memcpy(buffer + len, (char*)&pkghead, sizeof(pkghead));
+			send(serversocket, (char*)&pkghead, sizeof(pkghead), 0);
+			send(serversocket, buffer2, len2, 0);
+			Sleep(10000 * SEC);
