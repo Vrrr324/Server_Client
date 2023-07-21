@@ -13,7 +13,7 @@ public:
 	PkgMaker();
 	~PkgMaker();
 	void		GetPos(int& pos, int& sp, int& rp, int& wp);	// 获取指针大小
-	void		GetPkg(char** backbuffer);						// 获取写入数据
+	void		GetPkg(char* backbuffer, size_t len);			// 获取写入数据
 	bool		Push(char* obj, size_t cursize);				// 压数据
 	bool		Pop(size_t cursize);							// 出数据
 	bool		AddSize(size_t addsize);						// 添加存储的数据内存大小

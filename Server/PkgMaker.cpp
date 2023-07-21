@@ -14,7 +14,7 @@ PkgMaker::PkgMaker()
 
 PkgMaker::~PkgMaker()
 {
-	//delete[] pkgbuffer; // 释放动态分配的内存
+	delete[] pkgbuffer; // 释放动态分配的内存
 }
 
 void PkgMaker::GetPos(int& pos, int& sp, int& rp, int& wp)
@@ -25,9 +25,9 @@ void PkgMaker::GetPos(int& pos, int& sp, int& rp, int& wp)
 	wp = this->wp;
 }
 
-void PkgMaker::GetPkg(char** backbuffer)
+void PkgMaker::GetPkg(char* backbuffer, size_t len)
 {
-	pkgbuffer = *backbuffer;
+	memcpy(pkgbuffer, backbuffer, len);
 }
 
 bool PkgMaker::Push(char* obj, size_t cursize)

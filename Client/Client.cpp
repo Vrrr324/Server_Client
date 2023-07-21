@@ -133,41 +133,43 @@ void Client::SendMessages()
 			memcpy(buffer1 + len1, buffer2, len2);
 			send(serversocket, buffer1, len1 + len2, 0);
 			Log_Test("buffer1");
-			Sleep(0.1 * SEC);
+			// Sleep(0.1 * SEC);
+// 			int a;
+// 			cin >> a;
 			delete[]buffer1;
 			delete[]buffer2;
 		}
 
 			// 测试粘包代码 强行将一个包分成两个
-		{
-			MsgMaker mm3;
-			char* buffer3 = new char[512];
-			memcpy(buffer3, "test code by spining one bag 2 two", sizeof("test code by spining one bag 2 two"));
-			char* buffer4 = new char[512];
-			memcpy(buffer4, "test two over", sizeof("test two over"));
-			size_t len3 = strlen(buffer3);
-			size_t len4 = strlen(buffer4);
-			mm3.MakeComplexMsg(buffer3, len3, SERVERID, clientID);
-			PkgHead pkghead;
-			PkgMaker pkgmaker;
-			pkghead.type = complex;
-			pkghead.tasktype = 0;
-			pkghead.source = 1;
-			pkghead.target = 0;
-			// len 14
-			pkghead.len = len4 + 1;
-			pkgmaker.Push((char*)&pkghead, sizeof(pkghead));
-			memcpy(buffer3 + len3, (char*)&pkghead, sizeof(pkghead));
-			// len 87
-			send(serversocket, buffer3, len3 + sizeof(pkghead), 0);
-			Log_Test("buffer3");
-			// Sleep(0.1 * SEC);
-			Sleep(10000 * SEC);
-			// send(serversocket, buffer4, len4 + 1, 0);
-			Log_Test("buffer4");
-			delete[]buffer3;
-			delete[]buffer4;
-		}
+// 		{
+// 			MsgMaker mm3;
+// 			char* buffer3 = new char[512];
+// 			memcpy(buffer3, "test code by spining one bag 2 two", sizeof("test code by spining one bag 2 two"));
+// 			char* buffer4 = new char[512];
+// 			memcpy(buffer4, "test two over", sizeof("test two over"));
+// 			size_t len3 = strlen(buffer3);
+// 			size_t len4 = strlen(buffer4);
+// 			mm3.MakeComplexMsg(buffer3, len3, SERVERID, clientID);
+// 			PkgHead pkghead;
+// 			PkgMaker pkgmaker;
+// 			pkghead.type = complex;
+// 			pkghead.tasktype = 0;
+// 			pkghead.source = 1;
+// 			pkghead.target = 0;
+// 			// len 14
+// 			pkghead.len = len4 + 1;
+// 			pkgmaker.Push((char*)&pkghead, sizeof(pkghead));
+// 			memcpy(buffer3 + len3, (char*)&pkghead, sizeof(pkghead));
+// 			// len 87
+// 			send(serversocket, buffer3, len3 + sizeof(pkghead), 0);
+// 			Log_Test("buffer3");
+// 			// Sleep(0.1 * SEC);
+// 			// Sleep(10000 * SEC);
+// 			// send(serversocket, buffer4, len4 + 1, 0);
+// 			Log_Test("buffer4");
+// 			delete[]buffer3;
+// 			delete[]buffer4;
+// 		}
 
 	}
 }

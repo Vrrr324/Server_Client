@@ -51,19 +51,19 @@ void MsgMaker::MakeComplexMsg(char *pkg, size_t &len, int dst, int src)
 
 void MsgMaker::AnalysisMsg(CircularQueue<char>& inpkg, char* outpkg, PkgHead& pkghead)
 {
-	char* tmpPkghead = new char[512];
-	inpkg.pop(sizeof(pkghead), tmpPkghead);
-	// ¸Ä
-	pkgmaker->GetPkg(&tmpPkghead);
-	pkgmaker->ReadData((char*)&pkghead, sizeof(pkghead));
-	inpkg.pop(pkghead.len, tmpPkghead + sizeof(pkghead));
+	inpkg.pop(sizeof(pkghead), (char*)&pkghead);
+	pkgmaker->GetPkg((char*)&pkghead, sizeof(pkghead));
+	char* tmpbuffer = new char[512];
+	inpkg.pop(pkghead.len, tmpbuffer);
+	pkgmaker->GetPkg(tmpbuffer, pkghead.len);
 	pkgmaker->ReadData(outpkg, pkghead.len);
-	delete[]tmpPkghead;
+	delete[]tmpbuffer;
 }
 
 void MsgMaker::AnalysisMsg(char* inpkg, char* outpkg, PkgHead& pkghead)
 {
-	pkgmaker->GetPkg(&inpkg);
+	pkgmaker->GetPkg(inpkg, sizeof(pkghead));
 	pkgmaker->ReadData((char*)&pkghead, sizeof(pkghead));
+	pkgmaker->GetPkg(inpkg, pkghead.len + sizeof(pkghead));
 	pkgmaker->ReadData(outpkg, pkghead.len);
 }

@@ -112,7 +112,6 @@ void Server::AnalysisMessages()
 		case complex:
 		{
 			Log_Printf(fmt::format("{} -> {}", pkghead.source, outpkg));
-			// printf("%d -> %s\n", pkghead.source, outpkg);
 		}
 		break;
 		}
