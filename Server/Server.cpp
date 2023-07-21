@@ -97,6 +97,10 @@ void Server::AnalysisMessages()
 		msg_que.get(sizeof(PkgHead), (char*)&pkghead);
 		if (msg_que.GetCount() < pkghead.len + sizeof(PkgHead))
 		{
+			if (pkghead.len > 10000)
+			{
+				Log_Test(fmt::format("{} -> {} ½âÎö´æÔÚ´íÎó", __FUNCTION__, __LINE__));
+			}
 			continue;
 		}
 
@@ -232,7 +236,7 @@ void Server::HeartSub()
 {
 	while((workstate & working) == working)
 	{
-		Sleep(50000 * SEC);
+		Sleep(5 * SEC);
 		time_t curtime = time(nullptr);
 		vector<int> deleteclient;
 		for (auto &it : clients_info)

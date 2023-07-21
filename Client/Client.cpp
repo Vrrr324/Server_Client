@@ -98,23 +98,23 @@ void Client::SendMessages()
 	// while (a++ < 100){
 
 
-// 		{
-// 			MsgMaker mm;
-// 			char* buffer = new char[256];
-// 			//cin >> buffer;
-// 			memcpy(buffer, "test1", sizeof("test1"));
-// 			size_t len = strlen(buffer);
-// 			Log_Cout(buffer);
-// 			mm.MakeComplexMsg(buffer, len, SERVERID, clientID);
-// 			if (send(serversocket, buffer, len, 0) == SOCKET_ERROR)
-// 			{
-// 				Log_Error("发送失败");
-// 			}
-// 			delete[] buffer;
-// 			// Sleep(100 * SEC);
-// 			Sleep(0.1 * SEC);
-// 			
-// 		}
+//  		{
+//  			MsgMaker mm;
+//  			char* buffer = new char[256];
+//  			//cin >> buffer;
+//  			memcpy(buffer, "test1", sizeof("test1"));
+//  			size_t len = strlen(buffer);
+//  			Log_Cout(buffer);
+//  			mm.MakeComplexMsg(buffer, len, SERVERID, clientID);
+//  			if (send(serversocket, buffer, len, 0) == SOCKET_ERROR)
+//  			{
+//  				Log_Error("发送失败");
+//  			}
+//  			delete[] buffer;
+//  			// Sleep(100 * SEC);
+//  			// Sleep(0.1 * SEC);
+//  			
+//  		}
  
 		// 注意：以下代码没有delete（new之后）
 
@@ -133,7 +133,7 @@ void Client::SendMessages()
 			memcpy(buffer1 + len1, buffer2, len2);
 			send(serversocket, buffer1, len1 + len2, 0);
 			Log_Test("buffer1");
-			// Sleep(0.1 * SEC);
+			Sleep(1 * SEC);
 // 			int a;
 // 			cin >> a;
 			delete[]buffer1;
@@ -179,7 +179,7 @@ void Client::SendHeart()
 	while (true)
 	{
 		// DELETE
-		Sleep(50000 * SEC);
+		Sleep(5 * SEC);
 		MsgMaker mm;
 		char* buffer = new char[256];
 		size_t len = 0;

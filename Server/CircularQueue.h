@@ -4,9 +4,9 @@
 */
 #pragma once
 #include "stdafx.h"
-// #include "Log.h"
 
-const int BUFFER_MAX = 1024;
+const int BUFFER_MAX = 4096;
+// const int BUFFER_MAX = 1024;
 // const int BUFFER_MAX = 128;
 
 template<class T>
@@ -98,7 +98,7 @@ public:
 		return (count + len) <= capacity;
 	}
 
-	void expand()
+	bool expand()
 	{
 		if (capacity <= (BUFFER_MAX * 16))
 		{
@@ -114,6 +114,14 @@ public:
 			data = tmp;
 			capacity = newCapacity;
 		}
+		else
+		{
+			// Log_Test(fmt::format("{} -> {} 消息队列队满", __FUNCTION__, __LINE__));
+			printf("%s -> %d 消息队列队满\n", __FUNCTION__, __LINE__);
+			Sleep(100 * 1000);
+			return false;
+		}
+		return true;
 	}
 
 	Iterator begin()
@@ -131,7 +139,7 @@ public:
 		unique_lock<mutex> lock(mtx);
 		if (!enough(len))
 		{
-			expand(); 
+			expand();
 		}
 		for (int idx = 0; idx < len; ++idx)
 		{
