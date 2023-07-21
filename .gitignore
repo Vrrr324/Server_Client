@@ -6,3 +6,4 @@ Client/x64
 *.vcxproj
 *.user
 *.filters
+*.sln
